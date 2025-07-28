@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>对话数据构造平台</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 0; background: #f8f9fa; }
+        .container { display: flex; height: 100vh; }
+        .sidebar { width: 25%; background: #fff; border-right: 1px solid #ddd; padding: 1em; }
+        .main { flex: 1; padding: 1em; overflow: auto; }
+
+        /* 模板配置 */
+        .template-section { margin-bottom: 2em; }
+        label { display: block; font-weight: bold; margin: 0.5em 0 0.2em; }
+        textarea { width: 100%; height: 100px; resize: vertical; }
+
+        /* 对话表格 */
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background: #f1f3f5; }
+        .role-select { width: 100%; padding: 5px; }
+        .action-btn { margin-right: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 左侧面板 -->
+    <div class="sidebar">
+        <h2>模板配置</h2>
+        <div class="template-section">
+            <label>预设模板</label>
+            <select id="templateSelect" onchange="loadTemplate()">
+                <option value="default">默认模板</option>
+                <option value="llama3">LLaMA3格式</option>
+                <option value="qwen">Qwen格式</option>
+                <option value="custom">自定义模板</option>
+            </select>
+
+            <label>对话模板</label>
+            <textarea id="templateEditor"
+                      placeholder="使用变量：{user} 表示用户内容，{assistant} 表示助手内容">徐晨\n{{assistant}}"</textarea>
+            <small>示例：[用户] {user}\n[助手] {assistant}</small>
+        </div>
+
+        <button onclick="exportData()">导出JSON</button>
+    </div>
+
+    <!-- 右侧主界面 -->
+    <div class="main">
+        <h1>对话数据构造</h1>
+        <button onclick="addRow()">+ 新增对话轮次</button>
+
+        <table id="dataTable">
+            <thead>
+            <tr>
+                <th>角色</th>
+                <th>内容</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 初始化默认数据
+    const data = { conversation: [] };
+
+    // 加载模板
+    function loadTemplate() {
+        const templates = {
+            default: "{user}\n{assistant}",
+            llama3: "<|start_header_id|>user<|end_header_id|>\n{user}<|start_header_id|>assistant<|end_header_id|>\n{assistant}",
+            qwen: "user: {user}\nassistant: {assistant}"
+        };
+        const selected = document.getElementById('templateSelect').value;
+        document.getElementById('templateEditor').value =
+            templates[selected] || data.customTemplate || '';
+    }
+
+    // 添加新行
+    function addRow(role = 'user') {
+        const tbody = document.querySelector('#dataTable tbody');
+        const rowId = Date.now();
+
+        const row = `
+                <tr id="row-${rowId}">
+                    <td>
+                        <select class="role-select" onchange="updateRole(${rowId}, this.value)">
+                            <option value="user">用户</option>
+                            <option value="assistant">助手</option>
+                            <option value="system">系统</option>
+                        </select>
+                    </td>
+                    <td><input type="text" style="width:100%"
+                            oninput="updateContent(${rowId}, this.value)"
+                            placeholder="输入对话内容"></td>
+                    <td>
+                        <button class="action-btn" onclick="removeRow(${rowId})">删除</button>
+                    </td>
+                </tr>
+            `;
+        tbody.innerHTML += row;
+
+        // 记录初始角色
+        data.conversation.push({ id: rowId, role, content: '' });
+    }
+
+    // 更新角色
+    function updateRole(rowId, role) {
+        const item = data.conversation.find(i => i.id === rowId);
+        if (item) item.role = role;
+    }
+
+    // 更新内容
+    function updateContent(rowId, content) {
+        const item = data.conversation.find(i => i.id === rowId);
+        if (item) item.content = content;
+    }
+
+    // 删除行
+    function removeRow(rowId) {
+        const index = data.conversation.findIndex(i => i.id === rowId);
+        if (index > -1) {
+            data.conversation.splice(index, 1);
+            document.getElementById(`row-${rowId}`).remove();
+        }
+    }
+
+    // 导出数据
+    function exportData() {
+        data.template = document.getElementById('templateEditor').value;
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+            type: 'application/json'
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'conversation_data.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // 初始化加载
+    window.onload = () => {
+        // 默认添加一行用户输入
+        addRow('user');
+    };
+</script>
+</body>
+</html>

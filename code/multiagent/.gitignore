@@ -1,0 +1,49 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+
+/log/
+/cache/
+/test/
+/local_config/
+
+# Python bytecode
+*.pyc
+*.pyo
+
+# 运行时生成的文件
+*.log
+*.pot
+
+# IDE 或编辑器配置文件
+.idea/
+.vscode/
+*.swp
+
+# Python 虚拟环境
+venv/
+env/
+*.env
+
+# 系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 依赖管理工具产生的文件
+Pipfile.lock
+poetry.lock
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# 临时文件
+*.bak
+*.tmp

@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+*.db
+
+# Node
+node_modules/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# 数据和模型
+*.h5
+*.ckpt
+*.pth
+*.pt
+*.log
+*.csv
+*.tsv
+*.zip
+*.tar
+*.tar.gz
+
+# 临时文件
+*.tmp
+*.swp 

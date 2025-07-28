@@ -1,0 +1,14 @@
+[project]
+name = "mcp-study"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.12.7",
+    "anthropic>=0.52.2",
+    "beautifulsoup4>=4.13.4",
+    "mcp>=1.9.2",
+    "openai>=1.84.0",
+    "python-dotenv>=1.1.0",
+]

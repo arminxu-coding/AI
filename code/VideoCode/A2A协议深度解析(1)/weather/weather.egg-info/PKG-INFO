@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: weather
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: a2a-sdk>=0.2.5
+Requires-Dist: uvicorn>=0.34.2
+
+# 介绍
+
+本项目是一个示例用的天气 Agent，用于在 A2A 演示中作为 Remote Agent 使用。
+
+# 启动方法
+
+在当前目录下执行如下命令即可启动：
+
+```sh
+uv run .
+```
