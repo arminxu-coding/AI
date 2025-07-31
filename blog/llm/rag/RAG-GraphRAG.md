@@ -1,4 +1,4 @@
-# 知识检索增强
+# 初识知识检索增强
 
 ## 一、RAG
 
@@ -151,6 +151,12 @@ print(response)
 
 
 
+
+
+
+
+
+
 # Tecnent内部GraphRAG的应用
 
 ## 一、GraphRAG简介
@@ -178,7 +184,9 @@ GraphRAG 是一种结构化、分层的RAG 方法，与使用纯文本片段的�
 
 GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回答，下图就是GraphRAG的主要流程：
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719201837879.png" alt="image-20250719201837879" style="zoom:30%;" />
+<img src="../assets/image-20250719201837879.png" alt="image-20250719201837879" style="zoom:30%;" />
+
+
 
 接下来将介绍构建索引和检索的详细步骤。
 
@@ -190,7 +198,9 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 
 文本切分大小（以Token数计算）默认是300个Token，作者发现1200个token大小的文本单元能取得更好效果。但是，越大的文本块大小会导致输出精度降低、召回率降低、并且降低参考文本的可读性；不过文本块尺寸越大，可以减少LLM调用次数，整个处理过程速度可以更快。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719201927611.png" alt="image-20250719201927611" style="zoom:50%;" />
+<img src="../assets/image-20250719201927611.png" alt="image-20250719201927611" style="zoom:50%;" />
+
+
 
 #### 3.1.2、构建知识图谱
 
@@ -198,7 +208,9 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 
 声明代表实体的一些状态或时间限制的陈述，它的提取和上面的流程分开。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202024142.png" alt="image-20250719202024142" style="zoom:50%;" />
+<img src="../assets/image-20250719202024142.png" alt="image-20250719202024142" style="zoom:50%;" />
+
+
 
 #### 3.1.3、Graph增强
 
@@ -207,7 +219,9 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 1. 社区发现：在此步骤中，我们使用Hierarchical Leiden算法生成实体社区的层次结构。这个方法将对我们的图应用递归社区聚类，直到达到社区规模阈值。这使我们能够了解图的社区结构，并提供一种在不同粒度级别上总结图的方法。
 2. 图嵌入：使用 Node2Vec 算法生成图的向量表示。这将使我们能够理解图的隐式结构，并提供额外的向量空间，以便在查询阶段搜索召回。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202105090.png" alt="image-20250719202105090" style="zoom:50%;" />
+<img src="../assets/image-20250719202105090.png" alt="image-20250719202105090" style="zoom:50%;" />
+
+
 
 #### 3.1.4、社区摘要
 
@@ -216,7 +230,9 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 1. 生成社区摘要：使用 LLM 生成每个社区的摘要。prompt中包含任务定义、社区子结构中的关键实体、关系和声明。
 2. 生成社区向量表示：通过社区报告摘要、社区标题的文本嵌入来生成社区的embedding。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202134532.png" alt="image-20250719202134532" style="zoom:50%;" />
+<img src="../assets/image-20250719202134532.png" alt="image-20250719202134532" style="zoom:50%;" />
+
+
 
 #### 3.1.5、文档处理
 
@@ -225,13 +241,17 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 1. 链接到文本单元：将每个文档与第一阶段创建的文本单元关联起来，能够理解哪些文档与哪些文本单元相关。
 2. 文档嵌入：使用文档切片的平均嵌入来生成文档的向量表示。具体做法是重新分块文档，不重叠块，然后为每个块生成嵌入，创建这些块的加权平均值，按token计数加权，并将其用作文档嵌入，然后基于这种文档表示，能够理解文档之间的隐含关系，并帮助生成文档的网络表示。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202221576.png" alt="image-20250719202221576" style="zoom:40%;" />
+<img src="../assets/image-20250719202221576.png" alt="image-20250719202221576" style="zoom:40%;" />
+
+
 
 ### 3.2、检索
 
 #### 3.2.1、Local Search
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202327792.png" alt="image-20250719202327792" style="zoom:40%;" />
+<img src="../assets/image-20250719202327792.png" alt="image-20250719202327792" style="zoom:40%;" />
+
+
 
 1. 给定用户查询和可选的对话历史记录，Local search从知识图谱中识别与用户输入语义相关的一组实体。这些实体充当知识图谱的访问点，从而能够提取进一步的相关详细信息，例如连接的实体、关系、实体协变量、社区报告，以及实体关联的原始输入文档中提取相关文本块。
 2. 然后对这些候选数据源进行优先级排序和过滤。
@@ -239,7 +259,7 @@ GraphRAG分为三个主要阶段：图谱构建，图数据召回，图增强回
 
 #### 3.2.2、Global Search
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202417888.png" alt="image-20250719202417888" style="zoom:40%;" />
+<img src="../assets/image-20250719202417888.png" alt="image-20250719202417888" style="zoom:40%;" />
 
 1. **Concatenation**：将社群摘要随机shuffle，并划分为预设的token大小的chunk，每个chunk作为一段context上下文。这样做确保了相关信息均匀分布，而不是聚集在单一的上下文窗口中。
 2. **Map**：并行生成每个区块的中间答案。同时要求LLM为生成的答案打分，分数范围从0到200，表示示答案对目标问题的帮助程度，得分为0的答案将被排除。
@@ -343,7 +363,7 @@ python -m graphrag.prompt_tune --root ./ragtest --domain "Chinese web novels" --
 
 由于自动微调时，每次给出的实体列表都会有所不同，这个过程缺乏可控性，通过手动调整Prompt，我们可以根据实际需求，精准定义需要提取的实体类型及其相关信息，从而确保提取结果的准确性和完整性。我们拿出输入文本片段给到GPT4，让他判别所要抽取的实体类别，然后再用实体类别让模型去抽取三元组，选择抽取三元组更符合你期望的实体类别。最后我们修改实体抽取prompt中任务说明部分、few-shot和real data部分的entity_types。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202704598.png" alt="image-20250719202704598" style="zoom:35%;" />
+<img src="../assets/image-20250719202704598.png" alt="image-20250719202704598" style="zoom:35%;" />
 
 上图是节点度数的直方图，左边是Prompt-Tune之前，右边是Prompt-Tune之后。经过Prompt-Tune之后，节点数量由**7531**增长到了**8880**个，同时高度数节点变得更多。
 
@@ -377,7 +397,7 @@ python -m graphrag.prompt_tune --root ./ragtest --domain "Chinese web novels" --
 
 我们使用ragas（https://github.com/explodinggradients/ragas）进行评测，它可以衡量以下三个维度的指标：
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719202947742.png" alt="image-20250719202947742" style="zoom:40%;" />
+<img src="../assets/image-20250719202947742.png" alt="image-20250719202947742" style="zoom:40%;" />
 
 我们选用以下两个评测指标：
 
@@ -407,7 +427,7 @@ GraphRAG其实就是在RAG的召回内容中加入图谱召回，来优化回答
 >
 >Graphusion: A RAG Framework for Scientific Knowledge Graph Construction with a Global Perspective
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719203112201.png" alt="image-20250719203112201" style="zoom:40%;" />
+<img src="../assets/image-20250719203112201.png" alt="image-20250719203112201" style="zoom:40%;" />
 
 大多数使用大模型构建知识图谱的方法关注的是局部视角，从单个句子或文档中抽取知识三元组，缺少一个融合过程以全局视角组合知识。
 
@@ -425,7 +445,7 @@ Graphusion介绍一种结合了全局视角的知识图谱构建的RAG框架，�
 >
 >AgentRE: An Agent-Based Framework for Navigating Complex Information Landscapes in Relation Extraction
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719203408990.png" alt="image-20250719203408990" style="zoom:45%;" />
+<img src="../assets/image-20250719203408990.png" alt="image-20250719203408990" style="zoom:45%;" />
 
 AgentRE是一个包含检索和记忆模块的智能体框架，可以处理来自不同渠道的数据，借助检索和记忆模块等工具，辅助智能体进行推理。与传统的单轮“文本输入，文本输出”语言模型不同，AgentRE通过多轮交互和推理，拓宽了信息源的利用范围，克服了单轮提取的局限。
 
@@ -445,7 +465,7 @@ AgentRE是一个包含检索和记忆模块的智能体框架，可以处理来�
 >
 >LightRAG: Simple and Fast Retrieval-Augmented Generation
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719203506626.png" alt="image-20250719203506626" style="zoom:40%;" />
+<img src="../assets/image-20250719203506626.png" alt="image-20250719203506626" style="zoom:40%;" />
 
 LightRAG对比微软的GraphRAG，它更多在信息召回层面做了优化。这里我们只看下LightRAG和GraphRAG的核心差异点：对图索引的构建和图信息召回。为了应对多样化的查询需求，LightRAG采用了两种不同的检索策略，主要包括以下两种方式：
 
@@ -462,7 +482,7 @@ LightRAG对比微软的GraphRAG，它更多在信息召回层面做了优化。�
 >
 >StructRAG: Boosting Knowledge Intensive Reasoning of LLMs via Inference-time Hybrid Information Structurization
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250719203628244.png" alt="image-20250719203628244" style="zoom:40%;" />
+<img src="../assets/image-20250719203628244.png" alt="image-20250719203628244" style="zoom:40%;" />
 
 StructRAG借鉴了人类处理复杂推理任务时通常不会不同于简单阅读散乱的原始内容，而是会将这些信息信息汇总成结构化知识，再利用这些结构化信息进行思考推理。论文中设计了不同的知识库索引，例如：
 

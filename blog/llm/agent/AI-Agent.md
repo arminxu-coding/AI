@@ -22,7 +22,7 @@ Agents定义为：`LLM` + `memory` + `planning skills` + `tool use`，即大语�
 
 如果抽象出来就是这样子的：
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250505214523754.png" alt="image-20250505214523754" style="zoom:30%;" />
+<img src="../assets/image-20250505214523754.png" alt="image-20250505214523754" style="zoom:30%;" />
 
 ## 二、Agent 架构
 
@@ -213,7 +213,7 @@ Agent 的工作机制
 
 Agent开发者的窘境
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250505214329460.png" alt="image-20250505214329460" style="zoom:50%;" />
+<img src="../assets/image-20250505214329460.png" alt="image-20250505214329460" style="zoom:50%;" />
 
 ### 3、Agent设计模式
 
@@ -237,7 +237,7 @@ Few-Shot模式应该是B端开发场景中使用频率最高的一种`Agent范�
 
 原始项目：https:/github.com/ysymyth/ReAct
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250505215526951.png" alt="image-20250505215526951" style="zoom:50%;" />
+<img src="../assets/image-20250505215526951.png" alt="image-20250505215526951" style="zoom:50%;" />
 
 ReAct 原理很简单，没有 ReAct 之前，**Reasoning**和 **Act** 是分割开来的，ReAct针对给出的问题，**先进行思考**，再根据**思考的结果行动**，然后**观测行动的结果**，如果不满足要求，再进行`思考、行动，直至得到满意的结果为止`。
 
@@ -263,7 +263,9 @@ ReAct 的基本思想是增强了动作空间，其中前者是原始的动作�
 
 在论文的开头作者也提到人类智能的一项能力，即每次执行行动后都有一个"自言自语的反思(0bservation:我现在做了啥，是不是已经达到了目的)这相当于让 Agent 能够维持短期记忆。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250505220224083.png" alt="image-20250505220224083" style="zoom:40%;" />
+<img src="../assets/image-20250505220224083.png" alt="image-20250505220224083" style="zoom:40%;" />
+
+
 
 一个ReAct流程里，关键是三个概念:
 
@@ -322,7 +324,9 @@ prompt 模板中fewshot 本质上就是**人类思维模式的结构化体现**�
 
   你需要计划，并且过程中计划可能会变化(比如你打开冰箱发现没有西红柿时，你将购买西红柿作为新的步骤加入计划)
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511155528804.png" alt="image-20250511155528804" style="zoom:50%;" />
+<img src="../assets/image-20250511155528804.png" alt="image-20250511155528804" style="zoom:50%;" />
+
+
 
 **规划器**
 
@@ -370,7 +374,9 @@ prompt 模板中fewshot 本质上就是**人类思维模式的结构化体现**�
 
    最后，合并器将所有计划的执行结果整合起来，形成对原始任务的最终解决方案这种模块化的设计显著减少了令牌消耗和执行时间，因为它允许一次性生成完整的工具链，而不是在每次迭代中都重复调用LLM此外，由于规划数据不依赖于工具的输出，因此可以在不实际调用工具的情况下对模型进行微调，进一步简化了微调过程
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511171253826.png" alt="image-20250511171253826" style="zoom:50%;" />
+<img src="../assets/image-20250511171253826.png" alt="image-20250511171253826" style="zoom:50%;" />
+
+
 
 **提示词模版**
 
@@ -398,7 +404,9 @@ HOTPOTQA_PWS_BASE= '''
 
 
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511171456211.png" alt="image-20250511171456211" style="zoom:50%;" />
+<img src="../assets/image-20250511171456211.png" alt="image-20250511171456211" style="zoom:50%;" />
+
+
 
 #### 3.6、LLMCompiler 模式
 
@@ -412,9 +420,11 @@ HOTPOTQA_PWS_BASE= '''
 
 planner：搜索"Scott Derrickson国籍" 和 搜索"Ed Wood国籍" 同时进行，最后合并即可
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511182607111.png" alt="image-20250511182607111" style="zoom:50%;" />
+<img src="../assets/image-20250511182607111.png" alt="image-20250511182607111" style="zoom:50%;" />
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511182622305.png" alt="image-20250511182622305" style="zoom:50%;" />
+
+
+<img src="../assets/image-20250511182622305.png" alt="image-20250511182622305" style="zoom:50%;" />
 
 架构上它由三个组件组成:
 
@@ -436,7 +446,7 @@ Basic Reflection 可以类比于学生(Generator)写作业，老师(Refector)来
 
 `Reflector`：接收来自Generator的response，根据开发者设置的要求，给出Reflections，即评语、特征、建议Generator再根据Reflector给出的反馈进行修改和优化，输出下一轮response，循环往复，直到循环次数
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511182831674.png" alt="image-20250511182831674" style="zoom:50%;" />
+<img src="../assets/image-20250511182831674.png" alt="image-20250511182831674" style="zoom:50%;" />
 
 Basic Reflection的架构，非常适合于进行相对比较发散的内容生成类工作，比如文章写作、图片生成、代码生成等等,Basic Reflection是一种非常高效的反思类AAgent设计模式。
 
@@ -458,7 +468,7 @@ Basic Reflectlon 的思路非常朴素，使用成本较低，但是在实际应
 
 作者在决策(AIWord)、推理(HOtQA)和代码生成(HumanEva)任务上进行了完整的对比实验，Refexion在不同的任务上均取得了不错的效果，特别是在代码生成任务上成为了最新的SOTA
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511183153918.png" alt="image-20250511183153918" style="zoom:50%;" />
+<img src="../assets/image-20250511183153918.png" alt="image-20250511183153918" style="zoom:50%;" />
 
 如图所示，Reflexion框架包含四个组成部分:
 
@@ -484,7 +494,7 @@ Basic Reflectlon 的思路非常朴素，使用成本较低，但是在实际应
 
 Refexion是一个选代过程，Actor产生行动，Evaluator对Actor的行动做出评价，Self.Rfexion基于行动和评价形成反思，并将反思结果存储到长期记忆中，直到Actor执行的结果达到目标效果。
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250511183656962.png" alt="image-20250511183656962" style="zoom:50%;" />
+<img src="../assets/image-20250511183656962.png" alt="image-20250511183656962" style="zoom:50%;" />
 
 reflection 和 basic reflection的区别
 
@@ -541,7 +551,7 @@ reflection 和 basic reflection的区别
 
 ### 2、adk中的`system_prompt`构建原理
 
-<img src="/Users/xuchen/Library/Application Support/typora-user-images/image-20250620005403554.png" alt="image-20250620005403554" style="zoom:50%;" />
+<img src="../assets/image-20250620005403554.png" alt="image-20250620005403554" style="zoom:50%;" />
 
 其中包括了以下的红框中几个标准且常见的，其中会想 system_prompt 中添加如下几个：
 
