@@ -8,6 +8,9 @@ from mcp.client.stdio import stdio_client
 
 from anthropic import Anthropic
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
 
 
 class MCPClient:
@@ -19,9 +22,9 @@ class MCPClient:
         # self.BASE_URL = "http://127.0.0.1:11434/v1/"
         # self.MODEL = "qwen2.5:1.5b "
         # self.OPENAI_API_KEY = "ollama"
-        self.BASE_URL = "https://api.deepseek.com"
+        self.BASE_URL = os.getenv("OPENAI_BASE_URL")
         self.MODEL = "deepseek-chat"
-        self.OPENAI_API_KEY = "sk-17eba7d01e174e4c8712d3df62549101"
+        self.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
         # 这里我希望用ollama代替openai
         self.client = OpenAI(

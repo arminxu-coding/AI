@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 from typing import Optional
 from contextlib import AsyncExitStack
 from mcp import ClientSession
@@ -7,7 +8,7 @@ from mcp.client.sse import sse_client
 from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()  # load environment variables from .env
+load_dotenv("../../.env")  # load environment variables from .env
 
 
 class MCPClient:
@@ -19,9 +20,9 @@ class MCPClient:
         # self.BASE_URL = "http://127.0.0.1:11434/v1/"
         # self.MODEL = "qwen2.5:1.5b "
         # self.OPENAI_API_KEY = "ollama"
-        self.BASE_URL = "https://api.deepseek.com"
+        self.BASE_URL = os.getenv("OPENAI_BASE_URL")
         self.MODEL = "deepseek-chat"
-        self.OPENAI_API_KEY = "sk-114cb5d9b3364649bd7ab553c3c06ea1"
+        self.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
         # 打印大模相关信息
         print("环境变量信息：")
