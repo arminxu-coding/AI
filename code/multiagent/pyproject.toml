@@ -19,6 +19,8 @@ trag = "^0.0.52"
 trag-langchain = "^0.0.52"
 python-dotenv = "^1.1.1"
 langchain-deepseek = "^0.1.4"
+beautifulsoup4 = "^4.13.4"
+mcp = "^1.12.3"
 
 [[tool.poetry.source]]
 name = "tencent"
