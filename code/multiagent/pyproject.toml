@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10,<3.13"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.11,<3.13"
 langgraph = "^0.6.2"
 langchain = "^0.3.27"
 langchain-community = "^0.3.27"
@@ -25,6 +25,7 @@ langchain-chroma = "^0.2.5"
 faiss-cpu = "^1.11.0.post1"
 langchain-huggingface = "^0.3.1"
 sentence-transformers = "^5.0.0"
+ipython = "^9.4.0"
 
 [[tool.poetry.source]]
 name = "tencent"
