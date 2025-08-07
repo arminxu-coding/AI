@@ -1,19 +1,9 @@
-from dotenv import load_dotenv
 import json
 import os
-from bs4 import BeautifulSoup
 import httpx
+from bs4 import BeautifulSoup
 from mcp.server.fastmcp import FastMCP
-from starlette.applications import Starlette
-from mcp.server.sse import SseServerTransport
-from starlette.requests import Request
-from starlette.routing import Mount, Route
-from mcp.server import Server
-import aiohttp
 from typing import Literal
-from datetime import datetime
-
-load_dotenv()
 
 # 实例化有一个mcp服务器
 mcp = FastMCP("docs")
