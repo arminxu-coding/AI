@@ -1,48 +1,15 @@
 import json
 import uuid
+from typing import Dict, List, AsyncGenerator
+
 import requests
 import sseclient
 from openai import OpenAI
-from typing import Dict, List, AsyncGenerator
 
 from multiagent.utils.common_util import ObjectUtil
 
-model_providers = {
-    "hunyuan-openapi": {
-        "url": "http://hunyuanapi.woa.com/openapi/v1/chat/completions",
-        "api_key": "Bearer Doc51WblCovlzJB5t5mgDH8Os29MubWA",
-        "call_method": "http"
-    },
-    "hunyuan": {
-        "url": "http://stream-server-online-openapi.turbotke.production.polaris:8080/openapi/chat/completions",
-        "api_key": "26785bfe-68a4-438a-9875-2f8bf2f49110",
-        "call_method": "http",
-        "headers": {
-            "Wsid": "10697",
-            "Accept": "application/json"
-        }
-    },
-    "siliconflow": {
-        "url": "https://api.siliconflow.cn/v1/chat/completions",
-        "api_key": "Bearer sk-oauyqdudcpitlpwsdhlwtxlhvbktnbcrkqvredwhqfkweugw",
-        "call_method": "http"
-    },
-    "deepseek": {
-        "url": "https://api.deepseek.com",
-        "api_key": "sk-114cb5d9b3364649bd7ab553c3c06ea1",
-        "call_method": "openai"
-    },
-    "alibaba": {
-        "url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "api_key": "sk-d5fac075883e4238b834003678d1faf1",
-        "call_method": "openai"
-    },
-    "ollama": {
-        "url": "http://localhost:11434/v1",
-        "api_key": "empty token",
-        "call_method": "openai"
-    }
-}
+with open("example.txt", "r", encoding="utf-8") as file:
+    model_providers = json.loads(file.read())
 
 openai_llm_mapping: Dict[str, OpenAI] = {}
 

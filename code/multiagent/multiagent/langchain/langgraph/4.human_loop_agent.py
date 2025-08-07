@@ -45,7 +45,10 @@ def human_assistance(query: str) -> str:
     # 这个工具的作用是 请求人类帮助，其实就是一个正常的工具，只不过其中实现调用了下面的 interrupt() 方法，是一个比较特殊的跳脱方法
     # 有点兜底tool的感觉，但是又不一样，因为这里是可以直接要求用户询问帮助，我认为 无非就是实现更加系统化了 更加高级了
     print(f"进入了 human_assistance 工具，用户请求为：{query}")
+    # 这里即会被进行中断tool执行，卡在这里，只有等待再次接收到用户的命令才会继续执行下去
+    # 如果当前agent接收到的消息不是 用户的Command 而是一个正常的query消息，那么框架层就会报错
     human_response = interrupt({"query": query})
+    # 这里应该是接收到用户Command的消息之后，继续特定的处理，作为新的辅助消息，让这个工具继续执行下去最终得到一个 ToolResponse
     print(f"获取到用户的反馈，反馈内容为：{human_response}")
     return human_response["data"]
 
