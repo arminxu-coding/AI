@@ -1,7 +1,4 @@
-from typing import List
-
 import httpx
-import requests
 from trag import Namespace, TRAG
 
 base_url = "https://api.trag.woa.com"
@@ -55,9 +52,12 @@ def init_test_graph(ns: Namespace):
     graph = ns.create_graph("test1", "测试graphrag,默认的测试检索文章", dimension=1024, embedding_model="bge-large-zh")
     # 创建索引
     index_test1 = graph.create_graph_index("index_test1")
-    # 倒入知识库内容，并生成图
-    index_test1.import_files("/Users/xuchen/work_space/AI/projects/multiagent/multiagent/rag/input/book.txt",
-                             policy="public-graphrag-policy", wait_for_finish=True)
+    # 导入知识库内容，并生成图
+    index_test1.import_files(
+        "/Users/xuchen/work_space/AI/projects/multiagent/multiagent/rag/graphrag/input/book.txt",
+        policy="public-graphrag-policy",
+        wait_for_finish=True
+    )
 
 
 def search_test_graph(ns: Namespace, query: str):
