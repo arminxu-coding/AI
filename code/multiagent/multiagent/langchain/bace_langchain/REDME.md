@@ -1,0 +1,8 @@
+本包章节是只要介绍一下langchain当中的基础语法
+
+1. 基础使用langchain定义chain结构，知道langchain自定义的一套链式语法 LCEL
+2. 了解langchain的结构化输出的使用，以及部分核心原理实现，详细还是建议进行debug一下
+3. 使用langchain构建一个聊天机器人的快速入门，会涉及到一定的workflow和图的概念；包含短期记忆（对话历史）的维护
+4. 使用langchain构建一个基础的聊天agent
+5. 使用langchain构建一个连接mcp工具的agent，langchain如何链接mcp-server，采用的是stdio的模式
+6. 使用langchain完成rag的开发使用，本地运行的embedding模型

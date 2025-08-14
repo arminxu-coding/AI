@@ -1,10 +1,11 @@
 import time
 import traceback
 from typing import Callable, AsyncGenerator
+
 from sse_starlette.sse import ServerSentEvent
 
-from multiagent.agents.models.request.base import BaseRequest
-from multiagent.agents.models.response.base import BaseResponse
+from multiagent.agents.pojo.request.base import BaseRequest
+from multiagent.agents.pojo.response.base import BaseResponse
 
 
 def base_sse_wrapper(

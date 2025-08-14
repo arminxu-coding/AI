@@ -1,13 +1,12 @@
 import httpx
-
+from a2a.types import AgentCard, Task
 from fastapi import FastAPI
 from sse_starlette import EventSourceResponse
-from multiagent.agents.host_agent import HostAgent, create_host_agent
-from multiagent.agents.host_agent import TaskCallbackArg
-from a2a.types import AgentCard, Task
 
-from multiagent.agents.models.request.chat import ChatRequest
-from multiagent.agents.server import base_sse_wrapper
+from multiagent.agents.a2a_multi_agent.host_agent.agent import HostAgent, create_host_agent
+from multiagent.agents.a2a_multi_agent.host_agent.remote_agent_connection import TaskCallbackArg
+from multiagent.agents.pojo.request.chat import ChatRequest
+from multiagent.agents.server.base import base_sse_wrapper
 
 app = FastAPI(docs_url=None, redoc_url=None)
 

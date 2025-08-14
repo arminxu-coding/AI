@@ -1,27 +1,28 @@
 import asyncio
 from typing import Optional, Dict, Any
-from google.genai import types
+
 from google.adk import Runner
 from google.adk.agents import LlmAgent
-from google.adk.models.lite_llm import LiteLlm
-from google.adk.sessions import InMemorySessionService
-from google.adk.tools.tool_context import ToolContext
-from google.adk.tools.base_tool import BaseTool
 from google.adk.agents.callback_context import CallbackContext
+from google.adk.models.lite_llm import LiteLlm
 from google.adk.models.llm_request import LlmRequest
 from google.adk.models.llm_response import LlmResponse
+from google.adk.sessions import InMemorySessionService
+from google.adk.tools.base_tool import BaseTool
+from google.adk.tools.tool_context import ToolContext
+from google.genai import types
 
 
 def get_weather(city: str, tool_context: ToolContext) -> dict:
-    """Retrieves the current weather report for a specified city.
+    """Retrieves the current weather_agent report for a specified city.
 
     Args:
         city (str): The name of the city (e.g., "New York", "London", "Tokyo").
 
     Returns:
-        dict: A dictionary containing the weather information.
+        dict: A dictionary containing the weather_agent information.
               Includes a 'status' key ('success' or 'error').
-              If 'success', includes a 'report' key with weather details.
+              If 'success', includes a 'report' key with weather_agent details.
               If 'error', includes an 'error_message' key.
     """
     print(f"--- Tool: get_weather_stateful called for {city} ---")
@@ -30,7 +31,7 @@ def get_weather(city: str, tool_context: ToolContext) -> dict:
 
     city_normalized = city.lower().replace(" ", "")
 
-    # Mock weather data (always stored in Celsius internally)
+    # Mock weather_agent data (always stored in Celsius internally)
     mock_weather_db = {
         "newyork": {"temp_c": 25, "condition": "sunny"},
         "london": {"temp_c": 15, "condition": "cloudy"},
@@ -49,7 +50,7 @@ def get_weather(city: str, tool_context: ToolContext) -> dict:
             temp_value = temp_c
             temp_unit = "°C"
 
-        report = f"The weather in {city.capitalize()} is {condition} with a temperature of {temp_value:.0f}{temp_unit}."
+        report = f"The weather_agent in {city.capitalize()} is {condition} with a temperature of {temp_value:.0f}{temp_unit}."
         result = {"status": "success", "report": report}
         print(f"--- Tool: Generated report in {preferred_unit}. Result: {result} ---")
 
@@ -60,7 +61,7 @@ def get_weather(city: str, tool_context: ToolContext) -> dict:
         return result
     else:
         # Handle city not found
-        error_msg = f"Sorry, I don't have weather information for '{city}'."
+        error_msg = f"Sorry, I don't have weather_agent information for '{city}'."
         print(f"--- Tool: City '{city}' not found. ---")
         return {"status": "error", "error_message": error_msg}
 
@@ -188,12 +189,12 @@ async def run_conversation():
     weather_agent = LlmAgent(
         name="weather_agent_v1",
         model=llm,
-        description="Provides weather information for specific cities.",
-        instruction="You are a helpful weather assistant. "
-                    "When the user asks for the weather in a specific city, "
+        description="Provides weather_agent information for specific cities.",
+        instruction="You are a helpful weather_agent assistant. "
+                    "When the user asks for the weather_agent in a specific city, "
                     "use the 'get_weather' tool to find the information. "
                     "If the tool returns an error, inform the user politely. "
-                    "If the tool is successful, present the weather report clearly.",
+                    "If the tool is successful, present the weather_agent report clearly.",
         tools=[get_weather],
         before_model_callback=block_keyword_guardrail,
         before_tool_callback=block_paris_tool_guardrail
@@ -219,7 +220,7 @@ async def run_conversation():
     )
     print(f"Runner created for agent '{runner.agent.name}'.")
 
-    await call_agent_async("What is the weather like in London?", runner, user_id, session_id)
+    await call_agent_async("What is the weather_agent like in London?", runner, user_id, session_id)
 
     stored_session = session_service.sessions[app_name][user_id][session_id]
 
@@ -235,7 +236,7 @@ async def run_conversation():
     #
     # print(f"Final Last City Checked (by tool): {stored_session.state.get('last_city_checked_stateful', 'Not Set')}")
     #
-    # await call_agent_async(query="Tell me the weather in New York.",
+    # await call_agent_async(query="Tell me the weather_agent in New York.",
     #                        runner=runner,
     #                        user_id=user_id,
     #                        session_id=session_id)

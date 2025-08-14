@@ -1,3 +1,7 @@
+"""
+基于内存保存会话历史agent
+https://docs.langchain.com/langgraph-platform/langgraph-basics/3-add-memory
+"""
 from typing import Annotated
 
 from dotenv import load_dotenv
@@ -17,10 +21,6 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
-"""
-基于内存保存会话历史agent
-https://docs.langchain.com/langgraph-platform/langgraph-basics/3-add-memory
-"""
 graph_builder = StateGraph(State)
 
 
@@ -34,8 +34,8 @@ def get_weather(location: str) -> str:
     Returns:
          str: 当前城市的天气详情
     """
-    print(f"执行了 get weather tool，其中参数 location：{location}")
-    return "The weather in " + location + " is clear and sunny，temperature is 25摄氏度"
+    print(f"执行了 get weather_agent tool，其中参数 location：{location}")
+    return "The weather_agent in " + location + " is clear and sunny，temperature is 25摄氏度"
 
 
 tools = [

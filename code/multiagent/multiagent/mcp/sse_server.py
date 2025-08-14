@@ -1,21 +1,17 @@
-from mcp.server.fastmcp import FastMCP
-from dotenv import load_dotenv
-import httpx
 import json
 import os
-from bs4 import BeautifulSoup
-from typing import Any
+from typing import Literal
+
 import httpx
+import uvicorn
+from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from mcp.server import Server
 from mcp.server.fastmcp import FastMCP
-from starlette.applications import Starlette
 from mcp.server.sse import SseServerTransport
+from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.routing import Mount, Route
-from mcp.server import Server
-import uvicorn
-import aiohttp
-from typing import Literal
-from datetime import datetime
 
 load_dotenv()
 
@@ -169,7 +165,7 @@ async def get_weather(
     #
     #             # 5. 结构化返回
     #             return (
-    #                 f"{weather_info['city']}: {weather_info['weather']} {temp:.1f}°{'C' if unit == 'celsius' else 'F'}, "
+    #                 f"{weather_info['city']}: {weather_info['weather_agent']} {temp:.1f}°{'C' if unit == 'celsius' else 'F'}, "
     #                 f"湿度{weather_info['SD']}, {weather_info['WD']}{weather_info['WS']}, "
     #                 f"更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     #             )

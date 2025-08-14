@@ -1,6 +1,6 @@
 from pydantic import Field
 
-from multiagent.agents.models.request.base import BaseRequest
+from multiagent.agents.pojo.request.base import BaseRequest
 
 
 class ChatRequest(BaseRequest):

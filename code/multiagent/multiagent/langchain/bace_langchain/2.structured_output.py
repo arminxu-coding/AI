@@ -6,7 +6,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-load_dotenv("../../.env")
+load_dotenv("../../../.env")
 
 tagging_prompt = ChatPromptTemplate.from_template(
     """

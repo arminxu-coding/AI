@@ -1,11 +1,9 @@
 import base64
 import json
 import uuid
-
 from typing import List, Optional, Dict, Any
 
 import httpx
-
 from a2a.client import A2ACardResolver
 from a2a.types import (
     AgentCard,
@@ -21,8 +19,10 @@ from google.adk.agents.callback_context import CallbackContext
 from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools.tool_context import ToolContext
 from google.genai import types
-from multiagent.agents.host_agent.remote_agent_connection import RemoteAgentConnections, TaskUpdateCallback
-from multiagent.agents.models.request.chat import ChatRequest
+
+from multiagent.agents.a2a_multi_agent.host_agent.remote_agent_connection import RemoteAgentConnections, \
+    TaskUpdateCallback
+from multiagent.agents.pojo.request.chat import ChatRequest
 
 
 class HostAgent:

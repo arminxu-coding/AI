@@ -1,3 +1,8 @@
+"""
+其实下面这个不能完全算是一个agent，更像是一个chain
+但是也具有agent灵活的表现了，没事：一步一步的来 会更加深入的
+https://docs.langchain.com/langgraph-platform/langgraph-basics/2-add-tools
+"""
 import json
 from typing import Annotated
 
@@ -18,11 +23,6 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
-"""
-其实下面这个不能完全算是一个agent，更像是一个chain
-但是也具有agent灵活的表现了，没事：一步一步的来 会更加深入的
-https://docs.langchain.com/langgraph-platform/langgraph-basics/2-add-tools
-"""
 graph_builder = StateGraph(State)
 
 llm = init_chat_model(model="deepseek-chat", model_provider="deepseek")
@@ -38,8 +38,8 @@ def get_weather(location: str) -> str:
     Returns:
          str: 当前城市的天气详情
     """
-    print(f"执行了 get weather tool，其中参数 location：{location}")
-    return "The weather in " + location + " is clear and sunny，temperature is 25摄氏度"
+    print(f"执行了 get weather_agent tool，其中参数 location：{location}")
+    return "The weather_agent in " + location + " is clear and sunny，temperature is 25摄氏度"
 
 
 tools = [

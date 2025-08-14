@@ -1,22 +1,24 @@
 import asyncio
+
 from dotenv import load_dotenv
 from langchain import hub
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.chat_models import init_chat_model
+from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_community.tools import TavilySearchResults
 from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.runnables import RunnableWithMessageHistory
 from langchain_core.tools import tool
 
-load_dotenv("../../.env")
+load_dotenv("../../../.env")
 
 model = init_chat_model(model="deepseek-chat", model_provider="deepseek")
 
 """
 langchain实现agent chain功能
 """
+
 
 @tool
 def get_weather(location: str) -> str:
@@ -28,7 +30,7 @@ def get_weather(location: str) -> str:
     Returns:
          str: 当前城市的天气详情
     """
-    return "The weather in " + location + " is clear and sunny，temperature is 25摄氏度"
+    return "The weather_agent in " + location + " is clear and sunny，temperature is 25摄氏度"
 
 
 # 定义工具
@@ -44,7 +46,7 @@ def model_test():
     print(f"ContentString: {response.content}")
     print(f"ToolCalls: {response.tool_calls}")
 
-    response = model.invoke([HumanMessage(content="What's the weather in SF?")])
+    response = model.invoke([HumanMessage(content="What's the weather_agent in SF?")])
     print(f"ContentString: {response.content}")
     print(f"ToolCalls: {response.tool_calls}")
 
@@ -85,7 +87,7 @@ def invoke():
     response = agent_executor.invoke(
         {
             "chat_history": chat_history,
-            "input": "What's the weather in SF?"
+            "input": "What's the weather_agent in SF?"
         }
     )
     print(response)
@@ -96,7 +98,7 @@ def stream():
     for chunk in agent_executor.stream(
             {
                 "chat_history": chat_history,
-                "input": "What's the weather in SF?",
+                "input": "What's the weather_agent in SF?",
             }
     ):
         print(chunk)
@@ -108,7 +110,7 @@ async def astream_events():
     async for event in agent_executor.astream_events(
             {
                 "chat_history": chat_history,
-                "input": "What's the weather in SF?",
+                "input": "What's the weather_agent in SF?",
             },
             version="v1"
     ):

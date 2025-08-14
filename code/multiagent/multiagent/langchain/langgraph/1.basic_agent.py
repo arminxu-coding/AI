@@ -1,3 +1,8 @@
+"""
+其实下面这个不能完全算是一个agent，更像是一个chain
+但是也具有agent灵活的表现了，没事：一步一步的来 会更加深入的
+https://docs.langchain.com/langgraph-platform/langgraph-basics/1-build-basic-chatbot
+"""
 from typing import Annotated
 
 from dotenv import load_dotenv
@@ -14,11 +19,6 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
-"""
-其实下面这个不能完全算是一个agent，更像是一个chain
-但是也具有agent灵活的表现了，没事：一步一步的来 会更加深入的
-https://docs.langchain.com/langgraph-platform/langgraph-basics/1-build-basic-chatbot
-"""
 graph_builder = StateGraph(State)
 
 llm = init_chat_model(model="deepseek-chat", model_provider="deepseek")

@@ -1,9 +1,10 @@
 import json
 import os
+from typing import Literal
+
 import httpx
 from bs4 import BeautifulSoup
 from mcp.server.fastmcp import FastMCP
-from typing import Literal
 
 # 实例化有一个mcp服务器
 mcp = FastMCP("docs")
@@ -142,7 +143,7 @@ async def get_weather(
     #
     #             # 5. 结构化返回
     #             return (
-    #                 f"{weather_info['city']}: {weather_info['weather']} {temp:.1f}°{'C' if unit == 'celsius' else 'F'}, "
+    #                 f"{weather_info['city']}: {weather_info['weather_agent']} {temp:.1f}°{'C' if unit == 'celsius' else 'F'}, "
     #                 f"湿度{weather_info['SD']}, {weather_info['WD']}{weather_info['WS']}, "
     #                 f"更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     #             )

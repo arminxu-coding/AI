@@ -2,11 +2,12 @@
 langchain 实现本地rag，需要开墙拉去 embedding—model
 """
 import os
-from langchain.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import TextLoader
+from langchain.vectorstores import FAISS
 from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.document_loaders import TextLoader
+from langchain_huggingface import HuggingFaceEmbeddings
 
 
 def initialize_embeddings(model_name="all-MiniLM-L6-v2"):
@@ -68,7 +69,7 @@ def main():
         print("创建新的向量数据库...")
         # 加载文档 - 这里可以替换为你的文档路径
         # 示例：加载当前目录下的所有txt文件
-        loader = DirectoryLoader('./', glob="**/*.txt", loader_cls=TextLoader)
+        loader = DirectoryLoader('../', glob="**/*.txt", loader_cls=TextLoader)
         documents = loader.load()
 
         # 如果没有找到文档，使用示例文档
