@@ -4,6 +4,7 @@
 import asyncio
 import json
 import operator
+import os
 from typing import Annotated, List, Tuple, Union, Literal
 from typing_extensions import TypedDict
 
@@ -46,11 +47,15 @@ class Act(BaseModel):
     )
 
 
-load_dotenv()
+load_dotenv("../../../../.env")
 
 tools = [TavilySearchResults(max_results=3)]
 
-llm = ChatOpenAI(model="deepseek/deepseek-chat-v3-0324:free")
+llm = ChatOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    model="deepseek/deepseek-chat-v3-0324:free",
+    api_key=os.getenv("OPENROUTER_OPENAI_API_KEY")
+)
 
 prompt = "You are a helpful assistant."
 agent_executor = create_react_agent(llm, tools, prompt=prompt)
@@ -74,7 +79,10 @@ planner_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 planner = planner_prompt | ChatOpenAI(
-    model="deepseek/deepseek-chat-v3-0324:free", temperature=0
+    base_url="https://openrouter.ai/api/v1",
+    model="deepseek/deepseek-chat-v3-0324:free",
+    api_key=os.getenv("OPENROUTER_OPENAI_API_KEY"),
+    temperature=0
 ).with_structured_output(Plan)
 
 # resp = planner.invoke(
@@ -100,7 +108,10 @@ replanner_prompt = ChatPromptTemplate.from_template("""对于给定的目标，�
 
 相应地更新你的计划。如果不需要更多步骤，并且您可以返回给用户，那么请以该步骤进行响应。否则，填写计划。只在计划中添加仍然需要完成的步骤。不要将之前完成的步骤作为计划的一部分。""")
 replanner = replanner_prompt | ChatOpenAI(
-    model="deepseek/deepseek-chat-v3-0324:free", temperature=0
+    base_url="https://openrouter.ai/api/v1",
+    model="deepseek/deepseek-chat-v3-0324:free",
+    api_key=os.getenv("OPENROUTER_OPENAI_API_KEY"),
+    temperature=0
 ).with_structured_output(Act)
 
 

@@ -6,3 +6,8 @@ easy-dataset：https://github.com/ConardLi/easy-dataset/blob/main/README.zh-CN.m
 Easy Dataset 是一个专为创建大型语言模型（LLM）微调数据集而设计的应用程序。它提供了直观的界面，用于上传特定领域的文件，智能分割内容，生成问题，并为模型微调生成高质量的训练数据。
 
 通过 Easy Dataset，您可以将领域知识转化为结构化数据集，兼容所有遵循 OpenAI 格式的 LLM API，使微调过程变得简单高效。
+
+
+### 2、一个微调原理和实操的开源项目
+llm-action：https://github.com/liguodongiot/llm-action/blob/main/README.md
+包含了llm训练、微调、推理、压缩等等知识，虽然学起来有点枯燥并且不容易动手实践，但是可以先看看入门。
