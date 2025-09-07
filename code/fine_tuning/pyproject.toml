@@ -1,0 +1,28 @@
+[project]
+name = "fine-tuning"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "arminxu",email = "2607241905@qq.com"}
+]
+readme = "README.md"
+requires-python = " >=3.12, <3.14"
+dependencies = [
+     "torch (>=2.8.0,<3.0.0)",
+    "numpy (>=2.3.2,<3.0.0)",
+    "gymnasium[classic_control] (>=0.29.0,<1.0.0)",
+    "pygame (>=2.5.0,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "fine_tuning", from = "src"}]
+
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple"
+priority = "primary"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
